@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		CD008D3F2016023500EDE1B4 /* GameInProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD008D3D2016023500EDE1B4 /* GameInProgress.swift */; };
 		CD008D442016029400EDE1B4 /* GameInProgress+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD008D422016029400EDE1B4 /* GameInProgress+CoreDataProperties.swift */; };
-		CD620E4020172B3400AA0213 /* GameDataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD620E3F20172B3400AA0213 /* GameDataStruct.swift */; };
 		CD70B3B72008B5CA00EE6450 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD70B3B62008B5CA00EE6450 /* AppDelegate.swift */; };
 		CD70B3B92008B5CA00EE6450 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD70B3B82008B5CA00EE6450 /* ViewController.swift */; };
 		CD70B3BC2008B5CA00EE6450 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD70B3BA2008B5CA00EE6450 /* Main.storyboard */; };
@@ -44,7 +43,6 @@
 		CD008D3D2016023500EDE1B4 /* GameInProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInProgress.swift; sourceTree = "<group>"; };
 		CD008D422016029400EDE1B4 /* GameInProgress+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameInProgress+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CD05F4052008DB7600F94A35 /* testGameCenter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = testGameCenter.entitlements; sourceTree = "<group>"; };
-		CD620E3F20172B3400AA0213 /* GameDataStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataStruct.swift; sourceTree = "<group>"; };
 		CD70B3B32008B5CA00EE6450 /* testGameCenter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testGameCenter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD70B3B62008B5CA00EE6450 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD70B3B82008B5CA00EE6450 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 				CD70B3B62008B5CA00EE6450 /* AppDelegate.swift */,
 				CD94FE9B200B612800DC6CDD /* GameCenterStuff.swift */,
 				CD70B3B82008B5CA00EE6450 /* ViewController.swift */,
-				CD620E3F20172B3400AA0213 /* GameDataStruct.swift */,
 				CD7D4BAD2009C8A2003CE7A2 /* HomeVC.swift */,
 				CD70B3BA2008B5CA00EE6450 /* Main.storyboard */,
 				CD70B3C02008B5CA00EE6450 /* Assets.xcassets */,
@@ -299,7 +296,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD620E4020172B3400AA0213 /* GameDataStruct.swift in Sources */,
 				CD70B3B92008B5CA00EE6450 /* ViewController.swift in Sources */,
 				CD008D3F2016023500EDE1B4 /* GameInProgress.swift in Sources */,
 				CD008D442016029400EDE1B4 /* GameInProgress+CoreDataProperties.swift in Sources */,

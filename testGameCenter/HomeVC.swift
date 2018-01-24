@@ -9,6 +9,8 @@
 import UIKit
 import GameKit
 
+//let matchMaker = GKMatchmaker.shared() // THIS CAN BE USED TO FIND MATCHES VIA CUSTOM FINDERS & CODES
+
 class HomeVC: UIViewController {
     @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var leaderBtn: UIButton!
@@ -28,6 +30,7 @@ class HomeVC: UIViewController {
     
     @IBAction func challengeTapped(_ sender: Any) {
         //challenge a specific player to a game
+        
     }
     
     @IBAction func xtraTapped(_ sender: Any) {

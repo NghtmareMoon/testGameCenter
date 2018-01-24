@@ -10,9 +10,18 @@ import UIKit
 import GameKit
 import MultipeerConnectivity
 
+//Every command send will be a string with the following properties separated by a comma:
+// [SUBMISSIONKEY, INT (ATAPS), INT (BTAPS), GAMELOG]
+// SUBMISSION KEYS are to identify what to do with the rest of the data.
+
+let CHECKRAND = "checkRandomNumberKey" //this only comes with 1 int to compare
+let TURNEND = "playersTurnHasEnded" //this comes with the score and game log attached
+let STARTGAME = "readyToStartGame" //this is to nofity that player 1/2 have been asigned and are ready to start
+let ENDGAME = "gameHasEnded" //notify the game ended
+
 class ViewController: UIViewController{
     /*
-     TESTING GAMECENTER: THIS GAME WILL CONNECT UP TO 4 PLAYERS. TURN BASED GAME
+     TESTING GAMECENTER: THIS GAME WILL CONNECT UP TO 2 PLAYERS. TURN BASED GAME
      EACH TURN ONE PLAYER CAN CLICK BUTTON A OR B AND THEN END HIS TURN
      LOG WILL BE DISPLAYED: PLAYER X CLICKED A 10 TIMES AND B 20 TIMES AND TOOK X SECONDS FOR HIS TURN
      GAME WILL END AFTER EACH PLAYER HAS HAD 2 TURNS
@@ -24,6 +33,8 @@ class ViewController: UIViewController{
      - UPDATING GAMES, ARE THEY SAVED IN GAMEKIT CLOUD OR DO THEY NEED TO BE STORED IN PHONE?
      
  */
+    @IBOutlet weak var p1Label: UILabel!
+    @IBOutlet weak var p2Label: UILabel!
     @IBOutlet weak var turnLabel: UILabel!
     @IBOutlet weak var endBtn: UIButton!
     @IBOutlet weak var yourTurnLabel: UILabel!
@@ -81,35 +92,51 @@ class ViewController: UIViewController{
     }
     
     func endTurn() {
-        //notify gamecenter
-        // send data of progress or something?
+        
         let localPlayer = GKLocalPlayer.localPlayer().alias
-        let localPlayerID = GKLocalPlayer.localPlayer().playerID
         logString += " ** Player \(localPlayer ?? "P1") ended his turn **\n"
-        let turnLog = "turnLog,\(localPlayerID ?? "ERROR: NO ID"),\(aTaps),\(bTaps), \(logString)"
+        let turnLog = "\(TURNEND),\(aTaps),\(bTaps)"
         let turnData = turnLog.data(using: .utf8)
         sendData(turnLog: turnData!)
         gameLog.text = logString
         
     }
     
+    func checkScoreWin(aTaps: Int, bTaps: Int) {
+        //check to see if you win
+    }
+    
     func sendData(turnLog: Data) {
             do {
-                try match?.sendData(toAllPlayers: turnLog, with: GKMatchSendDataMode.reliable)
-                print("DATA SENT!")
+                if GKLocalPlayer.localPlayer().isAuthenticated {
+                    print("Player is Authenticated")
+                    if match != nil {
+                        print("Match is NOT nil")
+                        print("Match expected players: \(match?.expectedPlayerCount ?? -99)")
+                        
+                    try match?.sendData(toAllPlayers: turnLog, with: GKMatchSendDataMode.reliable)
+                    print("DATA SENT!")
+                } else {
+                    print("MATCH IS NIL")
+                }
+                }
             } catch {
             print("ERROR: \(error.localizedDescription)")
             }
     }
     
-    func receiveData(turnLog: Data) {
+    func receiveData(turnLog: Data, player: GKPlayer) {
         let receivedString = NSString(data: turnLog as Data, encoding: String.Encoding.utf8.rawValue)
-        parseReceivedData(dataString: receivedString! as String)
+        print ("Received: \(receivedString ?? "ERROR ERROR REDRUM REDRUM")")
+        parseReceivedData(dataString: receivedString! as String, player: player)
         
     }
     
     func compareRands(random: Int) {
+        print("Comparing Randoms:")
         let myInt = arc4random()
+        
+        print("Received Random is \(random), my random is \(myInt)")
         if (myInt > random) {
             print("WE ARE PLAYER 1")
             startTurn()
@@ -121,45 +148,65 @@ class ViewController: UIViewController{
         }
     }
     
-    func parseReceivedData(dataString: String) {
+    func parseReceivedData(dataString: String, player: GKPlayer) {
         //separate the values sent in the string.
         let separatedData = dataString.split(separator: ",")
-        let receivedType = separatedData[0]
-        let receivedPlayer = separatedData[1]
-        let receivedATaps = Int(separatedData[2])
-        let receivedBTaps = Int(separatedData[3])
-        let receivedLog = separatedData[4]
+        let receivedType = String(separatedData[0]) //KEY
+        let receivedATaps = Int(separatedData[1]) //ATAPS
+        let receivedBTaps = Int(separatedData[2]) //BTAPS
         
         switch receivedType {
-        case "turnLog":
+        case TURNEND:
             //append to string
-            logString = String(receivedLog)
-        case "initRand":
+            logString += "Player \(player.alias) tapped A \(receivedATaps!) times and B \(receivedBTaps!) times \n"
+            checkScoreWin(aTaps: receivedATaps!, bTaps: receivedBTaps!)
+            //since the other turn ended, we get to start our turn
+            startTurn()
+        case CHECKRAND:
             //compare values of your generated rand and the received generated rand
             compareRands(random: receivedATaps!)
-        case "startG":
+        case STARTGAME:
+            //all players ready
             print("Start Game")
-        case "endTurn":
+        case ENDGAME:
             print("OPPONENT ENDED TURN, BEGIN OURS!")
             startTurn()
         default:
             print("UNKNOWN SHIT")
         }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         yourTurnLabel.isHidden = true
+        if match != nil{
+            match!.delegate = self
+        }
+        
         // Do any additional setup after loading the view, typically from a nib.
         matchStart()
+        loadPlayers()
+    }
+    
+    func loadPlayers(){
+        //get players and add them to the P1: & P2 labels
+        let playerArray = match?.players
+        print ("The player array count is \(playerArray?.count ?? -99)")
+        if playerArray!.count > 0 {
+            p1Label.text = GKLocalPlayer.localPlayer().alias
+            p2Label.text = playerArray?[0].alias
+        }
     }
     
     func matchStart() {
-        let localPlayerID = GKLocalPlayer.localPlayer().playerID
-        let initialTurn = "initRand,\(localPlayerID ?? "ERROR: NO ID"),\(aTaps),0,0"
-        let turnData = initialTurn.data(using: .utf8)
-        print("Sending String: \(initialTurn)")
-        sendData(turnLog: turnData!)
+        if GKLocalPlayer.localPlayer().isAuthenticated {
+            print("Local Player still authenticated, commencing match")
+            aTaps = Int(arc4random())
+            let initialTurn = "\(CHECKRAND),\(aTaps),0,0"
+            let turnData = initialTurn.data(using: .utf8)
+            sendData(turnLog: turnData!)
+        }
     }
     
 }
@@ -168,37 +215,42 @@ extension ViewController: GKMatchDelegate {
     
     // The match received data sent from the player.
     @available(iOS 8.0, *)
-    public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
+    func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
         print ("RECEIVED DATA 8.0")
-        print ("Received \(data) from \(player)")
-        receiveData(turnLog: data)
+        receiveData(turnLog: data, player: player)
     }
     
     @available(iOS 9.0, *)
-    public func match(_ match: GKMatch, didReceive data: Data, forRecipient recipient: GKPlayer, fromRemotePlayer player: GKPlayer) {
+    func match(_ match: GKMatch, didReceive data: Data, forRecipient recipient: GKPlayer, fromRemotePlayer player: GKPlayer) {
         print("RECEIVED DATA 9.0")
-        print ("Received \(data) for \(recipient) from \(player)")
+        receiveData(turnLog: data, player: player)
     }
     
     // The player state changed (eg. connected or disconnected)
     @available(iOS 4.1, *)
-    public func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
-        print("CHANGED STATE")
+    func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
+        
+        if match.expectedPlayerCount == 0 {
+            print("READY STEADY CAPTAIN!")
+            print("Players in Match: \(match.players.count)")
+        } else {
+            print ("SHIT SON, PLAYERS ARE MISSING!")
+            print("Players in Match: \(match.players.count)")
+        }
     }
     
     
     // The match was unable to be established with any players due to an error.
     @available(iOS 4.1, *)
-    public func match(_ match: GKMatch, didFailWithError error: Error?) {
+    func match(_ match: GKMatch, didFailWithError error: Error?) {
         print("FAILED")
     }
     
     
     // This method is called when the match is interrupted; if it returns YES, a new invite will be sent to attempt reconnection. This is supported only for 1v1 games
     @available(iOS 8.0, *)
-    public func match(_ match: GKMatch, shouldReinviteDisconnectedPlayer player: GKPlayer) -> Bool {
+    func match(_ match: GKMatch, shouldReinviteDisconnectedPlayer player: GKPlayer) -> Bool {
         return true
     }
-    
 }
 

@@ -98,7 +98,7 @@
                                 <rect key="frame" x="10" y="318.5" width="150" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="Xdc-c6-2lF"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="Xdc-c6-2lF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="BUTTON A"/>
@@ -110,7 +110,7 @@
                                 <rect key="frame" x="215" y="318.5" width="150" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="gNw-Jp-ZX0"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="gNw-Jp-ZX0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="BUTTON B"/>
@@ -147,7 +147,7 @@
                                 <rect key="frame" x="112" y="241" width="150" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="LpR-JS-oCg"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="LpR-JS-oCg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="END TURN"/>
@@ -171,11 +171,30 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P1:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2z9-JF-vsO">
+                                <rect key="frame" x="15" y="20" width="125" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="ZO0-sn-thG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P2:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5aN-7O-q0g">
+                                <rect key="frame" x="235" y="20" width="125" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="pAk-bA-X1o"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="GWO-Gm-HqG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="0Oo-eD-Qey"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yf0-ex-5lp" secondAttribute="trailing" constant="10" id="1X0-ep-PBa"/>
+                            <constraint firstItem="5aN-7O-q0g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1q1-e0-Aab"/>
                             <constraint firstItem="yV5-BL-G7y" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2LL-JI-mbi"/>
                             <constraint firstItem="PXs-ZI-oy2" firstAttribute="top" secondItem="yf0-ex-5lp" secondAttribute="bottom" constant="100" id="3UG-jn-iiJ"/>
                             <constraint firstItem="hME-fg-7W9" firstAttribute="top" secondItem="yV5-BL-G7y" secondAttribute="bottom" constant="50" id="9Zw-4j-pcW"/>
@@ -186,16 +205,19 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hME-fg-7W9" secondAttribute="trailing" constant="10" id="TYJ-dy-5MM"/>
                             <constraint firstItem="t6b-aZ-GRv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="TZb-gk-b5G"/>
                             <constraint firstItem="yf0-ex-5lp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Tir-Wq-lS7"/>
+                            <constraint firstItem="2z9-JF-vsO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="VEy-oW-vOY"/>
                             <constraint firstItem="dfq-0d-aGC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="c7w-7b-vGl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DE4-9E-pBL" secondAttribute="trailing" constant="10" id="exC-vb-bsB"/>
                             <constraint firstItem="hME-fg-7W9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="fej-5V-VDk"/>
                             <constraint firstItem="PXs-ZI-oy2" firstAttribute="top" secondItem="GWO-Gm-HqG" secondAttribute="bottom" constant="25" id="iYZ-3j-k55"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5aN-7O-q0g" secondAttribute="trailing" constant="15" id="juP-NF-yPd"/>
                             <constraint firstItem="DE4-9E-pBL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="jwT-Vz-ZeJ"/>
                             <constraint firstItem="yf0-ex-5lp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="kQG-DJ-E35"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hME-fg-7W9" secondAttribute="bottom" constant="10" id="qIM-Y1-Sd7"/>
                             <constraint firstItem="yf0-ex-5lp" firstAttribute="top" secondItem="dfq-0d-aGC" secondAttribute="bottom" constant="25" id="sFd-IO-au1"/>
                             <constraint firstItem="GWO-Gm-HqG" firstAttribute="top" secondItem="yf0-ex-5lp" secondAttribute="bottom" constant="25" id="vdb-Oo-jDl"/>
                             <constraint firstItem="t6b-aZ-GRv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xAc-MN-Xa6"/>
+                            <constraint firstItem="2z9-JF-vsO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="yf6-EN-Bzm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -205,6 +227,8 @@
                         <outlet property="endBtn" destination="PXs-ZI-oy2" id="mRh-LI-1c7"/>
                         <outlet property="endGameBtn" destination="dfq-0d-aGC" id="gg8-qV-RU9"/>
                         <outlet property="gameLog" destination="hME-fg-7W9" id="KBD-35-6Ck"/>
+                        <outlet property="p1Label" destination="2z9-JF-vsO" id="dIL-WK-8E5"/>
+                        <outlet property="p2Label" destination="5aN-7O-q0g" id="LHB-BL-6jz"/>
                         <outlet property="timeLabel" destination="GWO-Gm-HqG" id="18b-Jn-CT6"/>
                         <outlet property="yourTurnLabel" destination="t6b-aZ-GRv" id="6HD-eW-Oyc"/>
                     </connections>
